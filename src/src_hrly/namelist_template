@@ -1,0 +1,5 @@
+&setup
+window_size="@window_size@"
+pdy="@pdy@"
+cyc="@cyc@"
+/
