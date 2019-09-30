@@ -73,7 +73,7 @@ for bufr_type in bufr_types:
    #print(valtime,end)
    pdy=valtime[0:8]
    cyc=valtime[8:10]
-   obs_inventory=BASE+"/"+valtime+"/"+win+"/"+win+"_"+valtime+"_inventory_"+bufr_type
+   obs_inventory=BASE+"/diags/"+pdy+"/"+cyc+"/"+win+"/"+win+"_"+valtime+"_inventory_"+bufr_type
    if(not os.path.isfile(obs_inventory)):
       print("file does not exist: "+obs_inventory)
       #update - end of while loop

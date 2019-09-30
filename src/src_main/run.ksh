@@ -11,6 +11,10 @@
 export ndate=/home/Donald.E.Lippi/bin/ndate
 BASE=`pwd`
 
+if [[ `hostname | cut -c 1` == 'h' ]]; then; machine="hera"; fi
+if [[ `hostname | cut -c 1` == 't' ]]; then; machine="theia"; fi
+
+ln -sf Makefile.$machine ./Makefile
 make
 
 err=$?
@@ -19,18 +23,27 @@ if [[ $err -ne 0 ]]; then
    exit "$err"
 fi
 
-num_days=7.00 #user input (1 of 3) - does NOT include last time.
-num_days=1.00 #user input (1 of 3) - does NOT include last time.
+##########################################################################################
+num_days=4.00 #user input (1 of 3) - does NOT include last time.
+#num_days=3.50 #user input (1 of 3) - does NOT include last time.
 (( num_days_2hours=num_days*24 ))
-#start=2019070400 #user input (2 of 3)
-#start=2019071100 #user input (2 of 3)
-#start=2019071800 #user input (2 of 3)
-start=2019072500 #user input (2 of 3)
-start=2019080100 #user input (2 of 3)
-start=2019090100 #user input (2 of 3)
-#start=2019081500 #user input (2 of 3)
-#start=2019082200 #user input (2 of 3)
+start=2019070400 #user input (2 of 3)
+pdy=`echo $start | cut -c 1-8`
+cyc=`echo $start | cut -c 9-10`
+dir=/scratch2/NCEPDEV/fv3-cam/Donald.E.Lippi/hrlyGDAS/histograms/src/src_main/diags
+echo $dir
+while [[ -e $dir/$pdy/$cyc/short/short_${pdy}${cyc}_inventory ]]; do
+   start=`${ndate} +6 ${start}`
+   pdy=`echo $start | cut -c 1-8`
+   cyc=`echo $start | cut -c 9-10`
+   echo "exists: short_${pdy}${cyc}_inventory"
+
+done
+echo $start
 end=`${ndate} +$num_days_2hours ${start}`
+##########################################################################################
+
+
 window_sizes="short long ops" #user input (3 of 3)
 #window_sizes="short" #user input (3 of 3)
 
@@ -50,13 +63,15 @@ fi
 while [[ $valtime -lt $end ]]; do
    cd $BASE
    echo "run.ksh: " $valtime
-   mkdir -p $valtime
+   #mkdir -p $valtime
    PDY=`echo $valtime | cut -c 1-8`
    CYC=`echo $valtime | cut -c 9-10`
+   mkdir -p diags/$PDY/$CYC
 
    for win in $window_sizes; do
        cd $BASE
-       cd $valtime
+       #cd $valtime
+       cd diags/$PDY/$CYC
        echo "run.ksh: " $win
        mkdir -p $win
        cd $win

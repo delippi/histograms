@@ -54,7 +54,7 @@ for win in windows:
    pdy=valtime[0:8]
    cyc=valtime[8:10]
    #print(pdy,cyc)
-   obs_inventory=BASE+"/"+valtime+"/"+win+"/"+win+"_"+valtime+"_inventory"
+   obs_inventory=BASE+"/diags/"+pdy+"/"+cyc+"/"+win+"/"+win+"_"+valtime+"_inventory"
    if(not os.path.isfile(obs_inventory)):
       print("file does not exist: "+obs_inventory)
       #update - end of while loop

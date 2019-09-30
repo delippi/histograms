@@ -55,7 +55,7 @@ for win in windows:
    pdy=valtime[0:8]
    cyc=valtime[8:10]
    #print(pdy,cyc)
-   obs_inventory=BASE+"/"+valtime+"/"+win+"/"+win+"_"+valtime+"_inventory_"+bufr_type
+   obs_inventory=BASE+"/diags/"+pdy+"/"+cyc+"/"+win+"/"+win+"_"+valtime+"_inventory_"+bufr_type
    if(os.path.isfile(obs_inventory)):
       if(win == "short"): count_s+=1
       if(win == "long"):  count_l+=1
