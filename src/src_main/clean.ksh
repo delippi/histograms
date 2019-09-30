@@ -1,24 +1,25 @@
 #!/bin/ksh
 
-export ndate=/home/Donald.E.Lippi/bin/ndate
 BASE=`pwd`
-start=2019070400
-end=2019071718
-window_sizes="short long ops" #user input (3 of 3)
-valtime=$start
-FH=6
-while [[ $valtime -le $end ]]; do
-   cd $BASE
-   echo "clean.ksh: " $valtime
-   PDY=`echo $valtime | cut -c 1-8`
-   CYC=`echo $valtime | cut -c 9-10`
-   for win in $window_sizes; do
-       cd $BASE
-       rm -f $valtime/$win/namelist
-       rm -f $valtime/$win/setup.ksh
-       rm -f $valtime/$win/*out
-       unlink $valtime/$win/bufrhist.x
-   done
-   valtime=`${ndate} +$FH ${PDY}${CYC}`
-done
+export ndate=/home/Donald.E.Lippi/bin/ndate
 
+dir=/scratch2/NCEPDEV/fv3-cam/Donald.E.Lippi/hrlyGDAS/histograms/src/src_main/diags
+bufrhit_x=$dir/*/*/*/bufrhist.x
+bufrhist2019090500_short_out=$dir/*/*/*/bufrhist2019090500_short.out
+namelist=$dir/*/*/*/namelist
+setup_ksh=$dir/*/*/*/setup.ksh
+
+
+echo "Be careful running this."
+echo "Are you sure that you want to proceed the clean script? (y/n)"
+read ans
+
+if [[ $ans == 'y' ]]; then
+   echo "Cleaning up executables"
+   rm -f $bufrhit_x
+   echo "Cleaning up extra files:"
+   echo "1/2 namelists"
+   rm -f $namelist
+   echo "2/2 setup files"
+   rm -f $setup_ksh
+fi
